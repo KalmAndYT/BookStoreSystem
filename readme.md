@@ -94,7 +94,7 @@ Database Setup
 
 Running the Application
 1. Clone the repository (if applicable):
-   git clone https://github.com/KalmAndYT/bookstore-system.git
+   git clone https://github.com/KalmAndYT/BookStoreSystem
    cd bookstore-system
 
 2. Run it:
