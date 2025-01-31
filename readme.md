@@ -42,7 +42,6 @@ bookstore-system
     - BookManager.java
     - InventoryManagerDB.java
   - MainApp.java
-- README.md
 - database (SQL scripts and configurations)
 
 OOP Principles Implemented
