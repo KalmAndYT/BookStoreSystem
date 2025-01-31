@@ -94,12 +94,11 @@ Database Setup
 
 Running the Application
 1. Clone the repository (if applicable):
-   git clone <repository-url>
+   git clone https://github.com/KalmAndYT/bookstore-system.git
    cd bookstore-system
 
-2. Compile and run:
-   javac -d bin -cp . src/**/*.java
-   java -cp bin MainApp
+2. Run it:
+   Shift+F10 on MainApp
 
 Contributors
 - Bober Danial - Developer
