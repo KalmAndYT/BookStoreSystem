@@ -16,7 +16,7 @@ public class DatabaseHandler {
         try {
             Class.forName("org.postgresql.Driver"); // Ensure this line is present
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("❌ PostgreSQL JDBC Driver Not Found!", e);
+            throw new RuntimeException("PostgreSQL JDBC Driver Not Found!", e);
         }
     }
 
@@ -28,11 +28,11 @@ public class DatabaseHandler {
 
     private void connect() {
         try {
-            System.out.println("🔄 Attempting to connect to the database...");
+            System.out.println("Attempting to connect to the database...");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("✅ Database connected successfully!");
+            System.out.println("Database connected successfully!");
         } catch (SQLException e) {
-            System.err.println("❌ ERROR: Failed to connect to the database!");
+            System.err.println("ERROR: Failed to connect to the database!");
             e.printStackTrace();
         }
     }
@@ -51,7 +51,7 @@ public class DatabaseHandler {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("❌ Failed to reconnect to the database!", e);
+            throw new RuntimeException("Failed to reconnect to the database!", e);
         }
         return connection;
     }
