@@ -176,8 +176,9 @@ public class MainApp {
             System.out.println("2. Add a new book");
             System.out.println("3. Delete a book");
             System.out.println("4. Update book details");
-            System.out.println("5. View statistics");
-            System.out.println("6. Back to main menu");
+            System.out.println("5. Search book by ISBN");  // Новый пункт для поиска
+            System.out.println("6. View statistics");
+            System.out.println("7. Back to main menu");
             System.out.print("Enter your choice: ");
 
             String input = scanner.nextLine().trim();
@@ -185,7 +186,7 @@ public class MainApp {
             try {
                 choice = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid choice. Please enter a number (1-6).");
+                System.out.println("Invalid choice. Please enter a number (1-7).");
                 continue;
             }
 
@@ -203,9 +204,12 @@ public class MainApp {
                     updateBookDetails();
                     break;
                 case 5:
-                    viewStatistics();
+                    searchBookByIsbn();  // Вызов функции поиска по ISBN
                     break;
                 case 6:
+                    viewStatistics();
+                    break;
+                case 7:
                     return; // Exit to main menu
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -358,16 +362,16 @@ public class MainApp {
             System.out.println("\n=== Customer Menu ===");
             System.out.println("1. View all books");
             System.out.println("2. Buy a book");
-            System.out.println("3. Back to main menu");
+            System.out.println("3. Search book by ISBN");  // Новый пункт для поиска
+            System.out.println("4. Back to main menu");
             System.out.print("Enter your choice: ");
 
-            // Read input as String and parse to integer
             String input = scanner.nextLine().trim();
             int choice;
             try {
                 choice = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid choice. Please enter a number (1-3).");
+                System.out.println("Invalid choice. Please enter a number (1-4).");
                 continue;
             }
 
@@ -379,10 +383,39 @@ public class MainApp {
                     buyBook(customer);
                     break;
                 case 3:
+                    searchBookByIsbn();  // Вызов функции поиска по ISBN
+                    break;
+                case 4:
                     return; // Exit to main menu
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+        }
+    }
+
+    private static void searchBookByIsbn() {
+        System.out.print("Enter the ISBN of the book to search: ");
+        String isbn = scanner.nextLine().trim();
+
+        String query = "SELECT * FROM books WHERE isbn = ?";
+        try (Connection connection = databaseHandler.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, isbn);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                System.out.printf("ISBN: %s, Title: %s, Author: %s, Category: %s, Price: %.2f, Stock: %d%n",
+                        resultSet.getString("isbn"),
+                        resultSet.getString("title"),
+                        resultSet.getString("author"),
+                        resultSet.getString("category"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("stock"));
+            } else {
+                System.out.println("Book not found.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error searching for book: " + e.getMessage());
         }
     }
 
